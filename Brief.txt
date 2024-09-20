@@ -1,0 +1,41 @@
+Introduction
+
+ScottishGlen (the client) is a medium-sized company within the energy sector. After recovering from
+a recent security incident, management is looking at ways to improve the company’s security
+posture. A security consultant has advised that the company should consider the CIS Critical Security
+Controls1. According to the CIS a good first step is tracking enterprise assets within the company.
+This will allow the company to better manage its network and reduce the risk of future security
+incidents.
+The company has hired you to design and develop a lightweight Asset Tracking System which can be
+used to manage assets on the network. The software should be implemented to the specifications of
+the client, which are provided below.
+
+
+Client Brief
+
+The client requests that a software system is designed and developed to track assets within the
+company. All asset information should be stored in an online database. It is envisioned that this
+database could be used by other company systems in the future and thus descriptive and consistent
+naming conventions should be used.
+Assets include any hardware being used on the company network. It must be possible to add, view,
+edit, or delete asset data. A unique identifier should be automatically generated for each asset. The
+client would like the software to automatically get hardware data from the system on which it is
+running including system name, model, manufacturer, type, and IP address. Some assets have a
+physical sticker with the purchase date, which would be useful to capture. It should also be possible
+for a text note to be added, which can contain any extra data the company may want to capture
+about the specific asset.
+Each asset is linked to an employee who is responsible for it. It should be possible to add, edit or
+delete employee data. The first name, last name, and email address of the employee should be
+stored. Note that an employee may be responsible for one or more assets.
+Employees work within a department, which should also be captured. The departments within
+ScottishGlen include finance, human resources, operations, sales, and information technology.
+Departments will remain static and thus the ability to edit or delete department data are not
+required.
+The system must make data acquisition as easy as possible. It is expected that database
+communication will have a minimal response time, and that screen refresh time will not delay entry
+of data. Clear instructions must be visible to the user who will capture asset data, and a minimal
+learning curve is expected (user training time should be less than 30 minutes). The client operates a
+Microsoft environment, and the system must be able to run as a desktop application on a Windows
+machine.
+
+1 https://www.cisecurity.org/controls/cis-controls-list
