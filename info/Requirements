@@ -1,0 +1,24 @@
+Database;
+Assets include any hardware being used on the company network;
+add, view, edit, or delete asset data;
+A unique identifier should be automatically generated for each asset;
+software to automatically get hardware data from the system on which it isrunning including system name, model, manufacturer, type, and IP address;
+Some assets have aphysical sticker with the purchase date;
+text note to be added;
+
+Each asset is linked to an employee who is responsible for it;
+add, edit or delete employee data;
+first name, last name, and email address of the employee;
+employee may be responsible for one or more assets;
+
+Employees work within a department;
+Departments include finance, human resources, operations, sales, and information technology;
+Departments will remain static and thus the ability to edit or delete department data are not required;
+
+must make data acquisition as easy as possible;
+expected that database communication will have a minimal response time;
+screen refresh time will not delay entry of data;
+Clear instructions must be visible to the user who will capture asset data;
+a minimal learning curve is expected (user training time should be less than 30 minutes);
+client operates a Microsoft environment;
+system must be able to run as a desktop application on a Windows machine;
