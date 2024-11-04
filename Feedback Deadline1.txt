@@ -1,0 +1,9 @@
+Mostly correct classification of functional and non-functional requirements. One or two minor omissions. 
+You missed or incorrectly classified the following requirements: An employee may be linked to one or more assets.
+Fixed department fields [5]: finance, human resources, operations, sales, and information technology. The system must make data acquisition as easy as possible.
+Clear instructions must be visible to the user. 
+Also beware of adding requirements which are not mentioned in the client brief (e.g. security).
+Development approach demonstrates a good grasp of the subject matter. A good approach that follows most parts of an agile development methodology.
+I would have like to see more discussion of the distinguishing features of agile methods. Your planned approach should be linked to this, talking more to the management of the project.
+You mention good programming practices, but these don't show me that you understand agile methods.
+No example screenshots were included.
