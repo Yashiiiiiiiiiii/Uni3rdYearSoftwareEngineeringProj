@@ -8,7 +8,7 @@ CREATE TABLE ASSET(
                 ip TEXT NOT NULL,
                 purchasedate DATE NOT NULL,
                 note TEXT NOT NULL,
-                Employee INTEGER NOT NULL
+                Employee TEXT NOT NULL
 )
 CREATE TABLE Department(
         id INTEGER PRIMARY KEY,
