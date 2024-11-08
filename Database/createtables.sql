@@ -6,14 +6,14 @@ CREATE TABLE ASSET(
                 type TEXT NOT NULL,
                 manufacturer TEXT NOT NULL,
                 ip TEXT NOT NULL,
-                purchasedate DATE NOT NULL,
-                note TEXT NOT NULL,
+                purchasedate DATE,
+                note TEXT,
                 Employee TEXT NOT NULL
 )
 CREATE TABLE Department(
         id INTEGER PRIMARY KEY,
         name TEXT NOT NULL,
-        employee TEXT NOT NULL
+        employee TEXT
 )
 CREATE TABLE Employee(
         id INTEGER PRIMARY KEY,
@@ -21,5 +21,5 @@ CREATE TABLE Employee(
         secondname TEXT NOT NULL,
         email TEXT NOT NULL,
         department TEXT NOT NULL,
-        assets TEXT NOT NULL
+        assets TEXT
 )
