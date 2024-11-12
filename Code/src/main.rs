@@ -1,8 +1,10 @@
 use std::io::*;
 
+
 use colored::Colorize;
 use mysql::prelude::*;
 use mysql::*;
+use std::env;
 
 //consider using enums and structs to represent cases
 #[allow(dead_code)]
@@ -37,6 +39,27 @@ struct Employee {
 }
 
 fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
+    let d: bool;
+    match env::var("COLORTERM") {
+        Ok(colorterm) => {
+            println!("colorterm is: {}", colorterm);
+            if colorterm == "truecolor"{
+                d = true;
+            }
+            else{
+                d = false;
+            }
+            
+        },
+        Err(e) => {
+            println!("Couldn't read LANG ({})", e);
+            d = false;
+        },
+    };
+
+
+   
+
     let url = "mysql://sql2102675:7377HBPLYpHE@lochnagar.abertay.ac.uk/sql2102675".trim();
     let pool = Pool::new(url)?;
 
@@ -57,12 +80,12 @@ fn main() -> std::result::Result<(), Box<dyn std::error::Error>> {
 
     tx.commit()?;
     */
-    program(&mut conn);
+    program(&mut conn, d);
 
     Ok(())
 }
 
-fn program(conn: &mut PooledConn) {
+fn program(conn: &mut PooledConn, terminal: bool) {
     let run = true;
     println!("Welcome!");
     println!("Type Help For Info");
@@ -73,45 +96,76 @@ fn program(conn: &mut PooledConn) {
         let _ = stdout();
         stdin().read_line(&mut input).expect("err in main");
         input = input.trim().to_string();
-        command(conn, &input);
+        command(conn, &input, terminal);
         input = String::new();
     }
 }
 
-fn command(conn: &mut PooledConn, input: &String) -> bool {
+fn command(conn: &mut PooledConn, input: &String, terminal: bool) -> bool {
     if input == "help" || input == "Help" {
-        println!("Current Commands:");
+        if terminal {
+            println!("Current Commands:");
 
-        println!("help - This one - '{}'", "help".red());
+            println!("help - This one - '{}'", "help".red());
 
-        println!("exit - Immediately Closes the Program - '{}'", "exit".red());
+            println!("exit - Immediately Closes the Program - '{}'", "exit".red());
 
-        println!(
-            "\nadd - Used to add to a db - '{} {} {} {}' \n{}\n{}\n{}",
-            "[Add]".red(),
-            "[Department/Employee/Asset]".green(),
-            "[Fields in format e.g. (name,employee)]".purple(),
-            "[With values in format e.g. (Some_Name,Some_id)]".yellow(),
-            "[NO SPACES IN FIELDS (name,employee) NOT ( name, employee )] && [no need to include id as it will be calculated automatically]".cyan(),
-            "[to add more than one in certain fields separate id's by '-' e.g. (Some_Name,1-3-7-37)]".blue(),
-            "[Use '_' as a replacement for spaces]".magenta()
-        );
+            println!(
+                "\nadd - Used to add to a db - '{} {} {} {}' \n{}\n{}\n{}",
+                "[Add]".red(),
+                "[Department/Employee/Asset]".green(),
+                "[Fields in format e.g. (name,employee)]".purple(),
+                "[With values in format e.g. (Some_Name,Some_id)]".yellow(),
+                "[NO SPACES IN FIELDS (name,employee) NOT ( name, employee )] && [no need to include id as it will be calculated automatically]".cyan(),
+                "[to add more than one in certain fields separate id's by '-' e.g. (Some_Name,1-3-7-37)]".blue(),
+                "[Use '_' as a replacement for spaces]".magenta()
+            );
 
-        println!(
-            "\ndel - Used to delete field(s) from a table- '{} {} {}'",
-            "NOT IMPLEMENTED [del]".red(),
-            "[Department/Employee/Asset]".green(),
-            "[WHERE CONDITION]".purple()
-        );
+            println!(
+                "\ndel - Used to delete field(s) from a table- '{} {} {}'",
+                "NOT IMPLEMENTED [del]".red(),
+                "[Department/Employee/Asset]".green(),
+                "[WHERE CONDITION]".purple()
+            );
 
-        println!(
-            "\nview - View a given db - '{} {} optional: {}'",
-            "NOT IMPLEMENTED [view]".red(),
-            "[Department/Employee/Asset]".green(),
-            "[WHERE CONDITION]".purple()
-        );
+            println!(
+                "\nview - View a given db - '{} {} optional: {}'",
+                "NOT IMPLEMENTED [view]".red(),
+                "[Department/Employee/Asset]".green(),
+                "[WHERE CONDITION]".purple()
+            );
 
-        println!("edit - COMING SOON - 'edit'");
+            println!("edit - COMING SOON - 'edit'");
+        } else {
+            println!("Current Commands:");
+
+            println!("help - This one - '{}'", "help");
+
+            println!("exit - Immediately Closes the Program - '{}'", "exit");
+
+            println!(
+                "\nadd - Used to add to a db - '{} {} {} {}' \n{}\n{}\n{}",
+                "[Add]",
+                "[Department/Employee/Asset]",
+                "[Fields in format e.g. (name,employee)]",
+                "[With values in format e.g. (Some_Name,Some_id)]",
+                "[NO SPACES IN FIELDS (name,employee) NOT ( name, employee )] && [no need to include id as it will be calculated automatically]",
+                "[to add more than one in certain fields separate id's by '-' e.g. (Some_Name,1-3-7-37)]",
+                "[Use '_' as a replacement for spaces]"
+            );
+
+            println!(
+                "\ndel - Used to delete field(s) from a table- '{} {} {}'",
+                "NOT IMPLEMENTED [del]", "[Department/Employee/Asset]", "[WHERE CONDITION]"
+            );
+
+            println!(
+                "\nview - View a given db - '{} {} optional: {}'",
+                "NOT IMPLEMENTED [view]", "[Department/Employee/Asset]", "[WHERE CONDITION]"
+            );
+
+            println!("edit - COMING SOON - 'edit'");
+        }
 
         return true;
     } else if input == "exit" {
@@ -243,7 +297,7 @@ fn replace_nonnumbers(input: &mut String) -> String {
 
 fn add_query(conn: &mut PooledConn, mut argcon: [String; 4], parr: Vec<String>) {
     //prove first input is add
-    
+
     if parr[0] == "add" || parr[0] == "Add" || parr[0] == "ADD" {
         //is add so continue
         argcon[0] = "INSERT INTO".to_string();
@@ -455,21 +509,20 @@ fn add_query(conn: &mut PooledConn, mut argcon: [String; 4], parr: Vec<String>) 
             //finalise args
             argcon[3] += ")";
             //println!("argcon[3]: {}", argcon[3]);
-            
+
             //create query
             let n = "".to_owned()
-                        + argcon[0].as_str()
-                        + " "
-                        + argcon[1].as_str()
-                        + " "
-                        + argcon[2].as_str()
-                        + " "
-                        + argcon[3].as_str();
+                + argcon[0].as_str()
+                + " "
+                + argcon[1].as_str()
+                + " "
+                + argcon[2].as_str()
+                + " "
+                + argcon[3].as_str();
 
-                        println!("argcon: {}", n);
+            println!("argcon: {}", n);
 
             send_query(conn, n);
-
         } else {
             //Aborts if no input is met
             println!("Incorrect args");
